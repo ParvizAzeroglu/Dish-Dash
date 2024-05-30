@@ -1,15 +1,20 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     public GameObject[] dishPrefab;
     public GameObject gameOverScreen;
+    public GameObject hud;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI healthText;
     public float gameBoundLeft = -2f;
     public float gameBoundRight = -8f;
     private bool isGameOver = false;
     private float spawnRate = 1;
     private int health = 3;
     public int score = 0;
+    private bool isHudActive = true;
     void Start() {
         StartCoroutine(GameWave());
     }
@@ -21,6 +26,21 @@ public class GameManager : MonoBehaviour {
 
         // Check the game over state every frame
         CheckGameOver();
+
+        // Handle HUD visibility based on user input (H button)
+        HudController();
+    }
+
+    // Chechk code below pls
+    private void HudController() {
+        // Set UI text
+        scoreText.text = $"Score: {score}";
+        healthText.text = $"Health: {health}/3";
+        //Toggle HUD visibility when the H key is pressed
+        if (Input.GetKeyDown(KeyCode.H)) {
+            isHudActive = !isHudActive;
+            hud.SetActive(isHudActive);
+        }
     }
 
     IEnumerator GameWave() {
@@ -41,6 +61,7 @@ public class GameManager : MonoBehaviour {
 
     private void GameOver() {
         gameOverScreen.SetActive(true);
+        hud.SetActive(false);
     }
 
 
