@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     public GameObject[] dishPrefab;
+    public GameObject gameOverScreen;
     public float gameBoundLeft = -2f;
     public float gameBoundRight = -8f;
     private bool isGameOver = false;
     private float spawnRate = 1;
     private int health = 3;
+    public int score = 0;
     void Start() {
         StartCoroutine(GameWave());
     }
@@ -17,9 +19,8 @@ public class GameManager : MonoBehaviour {
             isGameOver = true;
         }
 
-        //if (isGameOver) {
-        //    Debug.Log("Game Over");
-        //}
+        // Check the game over state every frame
+        CheckGameOver();
     }
 
     IEnumerator GameWave() {
@@ -28,6 +29,20 @@ public class GameManager : MonoBehaviour {
             SpawnDish();
         }
     }
+
+    private void CheckGameOver() {
+        if (isGameOver) {
+            GameOver();
+            Time.timeScale = 0f;
+        } else {
+            Time.timeScale = 1f;
+        }
+    }
+
+    private void GameOver() {
+        gameOverScreen.SetActive(true);
+    }
+
 
     private void SpawnDish() {
         int randomNum = GenerateRandomNum(0, 2);
@@ -44,5 +59,9 @@ public class GameManager : MonoBehaviour {
 
     public void DecreaseHealth() {
         health -= 1;
+    }
+
+    public void GainScore() {
+        score += 10;
     }
 }

@@ -7,7 +7,6 @@ public class Dish : MonoBehaviour {
     }
 
     void Update() {
-
     }
 
     private void OnCollisionEnter(Collision collision) {

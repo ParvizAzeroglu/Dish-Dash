@@ -25,7 +25,12 @@ public class Player : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Dish")) {
-            Destroy(collision.gameObject);
+            DishCollide(collision.gameObject);
         }
+    }
+
+    private void DishCollide(GameObject dishObject) {
+        Destroy(dishObject);
+        gameManager.GainScore();
     }
 }
