@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public GameObject hud;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthText;
+    public ParticleSystem dishParticle;
     public float gameBoundLeft = -2f;
     public float gameBoundRight = -8f;
     private bool isGameOver = false;
@@ -53,10 +54,14 @@ public class GameManager : MonoBehaviour {
     private void CheckGameOver() {
         if (isGameOver) {
             GameOver();
-            Time.timeScale = 0f;
+            Invoke("StopGame", 0.4f);
         } else {
             Time.timeScale = 1f;
         }
+    }
+
+    private void StopGame() {
+        Time.timeScale = 0;
     }
 
     private void GameOver() {

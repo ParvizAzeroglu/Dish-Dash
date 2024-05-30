@@ -15,6 +15,8 @@ public class Dish : MonoBehaviour {
         if (collision.gameObject.CompareTag("Ground")) {
             Destroy(gameObject);
             gameManager.DecreaseHealth();
+            gameManager.dishParticle.transform.position = transform.position;
+            gameManager.dishParticle.Play();
         }
     }
 }
