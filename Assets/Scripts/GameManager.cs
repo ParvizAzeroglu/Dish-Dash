@@ -3,8 +3,10 @@ using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+    public GameObject musicObject;
     public GameObject[] dishPrefab;
     public GameObject gameOverScreen;
+    public GameObject pauseScreen;
     public GameObject hud;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthText;
@@ -16,23 +18,41 @@ public class GameManager : MonoBehaviour {
     private int health = 3;
     public int score = 0;
     private bool isHudActive = true;
+    public bool isGamePaused = false;
+    private AudioSource musicSource;
     void Start() {
         StartCoroutine(GameWave());
+        musicSource = musicObject.GetComponent<AudioSource>();
+        musicSource.volume = AudioManager.Instance.musicSound;
     }
 
     void Update() {
         if (health == 0) {
             isGameOver = true;
         }
-
         // Check the game over state every frame
         CheckGameOver();
 
         // Handle HUD visibility based on user input (H button)
         HudController();
+
+        PauseController();
+
     }
 
     // Chechk code below pls
+    private void PauseController() {
+        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver) {
+            isGamePaused = !isGamePaused;
+        }
+        //Time.timeScale = isGamePaused ? 0f  : 1f;
+        if (isGamePaused) {
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0f;
+        } else {
+            pauseScreen.SetActive(false);
+        }
+    }
     private void HudController() {
         // Set UI text
         scoreText.text = $"Score: {score}";
@@ -67,6 +87,7 @@ public class GameManager : MonoBehaviour {
     private void GameOver() {
         gameOverScreen.SetActive(true);
         hud.SetActive(false);
+        musicSource.Stop();
     }
 
 
