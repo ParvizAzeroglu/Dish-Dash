@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad6de287dec18f4880057b0f75b20bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSound: 0
+  musicSound: 1
 --- !u!4 &335552301
 Transform:
   m_ObjectHideFlags: 0
